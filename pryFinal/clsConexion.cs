@@ -12,10 +12,10 @@ namespace pryFinal
     public class clsConexion
     {
 
-        private readonly string cadenaConexion = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=Contactos.mdb";
+        private string cadenaConexion;
         private OleDbConnection conexion;
 
-        public clsConexion() 
+        public clsConexion()
         {
             string rutaBase = Application.StartupPath;
             cadenaConexion = $"Provider=Microsoft.Jet.OLEDB.4.0;Data Source={rutaBase}\\Contactos.mdb";
@@ -91,6 +91,7 @@ namespace pryFinal
                 Cerrar();
             }
         }
-
     }
+
 }
+

@@ -1,0 +1,22 @@
+﻿[
+    {
+        "Usuario": "usuario1",
+        "Clave": "abc123",
+        "IntentosFallidos": 0,
+        "Bloqueado": false
+    },
+    {
+        "Usuario": "maria",
+        "Clave": "456",
+        "IntentosFallidos": 0,
+        "Bloqueado": false
+    },
+    {
+        "Usuario": "erika9",
+        "Clave": "1234",
+        "IntentosFallidos": 0,
+        "Bloqueado": false
+    }
+
+
+]

@@ -59,7 +59,7 @@
             this.panelProductos.Controls.Add(this.logo);
             this.panelProductos.Location = new System.Drawing.Point(-4, -6);
             this.panelProductos.Name = "panelProductos";
-            this.panelProductos.Size = new System.Drawing.Size(890, 100);
+            this.panelProductos.Size = new System.Drawing.Size(1032, 100);
             this.panelProductos.TabIndex = 0;
             // 
             // lblSaludo
@@ -326,10 +326,10 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvProductos.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvProductos.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            this.dgvProductos.Location = new System.Drawing.Point(244, 129);
+            this.dgvProductos.Location = new System.Drawing.Point(247, 137);
             this.dgvProductos.Name = "dgvProductos";
             this.dgvProductos.RowHeadersVisible = false;
-            this.dgvProductos.Size = new System.Drawing.Size(589, 308);
+            this.dgvProductos.Size = new System.Drawing.Size(751, 285);
             this.dgvProductos.TabIndex = 81;
             this.dgvProductos.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dgvProductos.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -364,7 +364,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(9)))), ((int)(((byte)(43)))));
-            this.ClientSize = new System.Drawing.Size(886, 514);
+            this.ClientSize = new System.Drawing.Size(1027, 514);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.btnModificar);

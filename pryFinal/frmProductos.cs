@@ -87,9 +87,12 @@ namespace pryFinal
 
 
         private void ActualizarGrilla()
-        {
+        {    
             dgvProductos.DataSource = null;
-            dgvProductos.DataSource = clsData.ListaProductos;
+            if (clsData.ListaProductos.Count > 0)
+            {
+                dgvProductos.DataSource = clsData.ListaProductos;
+            }
         }
 
 

@@ -43,6 +43,7 @@
             this.treeViewContactos = new System.Windows.Forms.TreeView();
             this.label4 = new System.Windows.Forms.Label();
             this.toolTipC = new Guna.UI2.WinForms.Guna2HtmlToolTip();
+            this.btnBuscar = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             this.guna2Panel1.SuspendLayout();
             this.SuspendLayout();
@@ -66,7 +67,7 @@
             this.guna2Panel1.Controls.Add(this.logo);
             this.guna2Panel1.Location = new System.Drawing.Point(-3, -4);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(864, 94);
+            this.guna2Panel1.Size = new System.Drawing.Size(884, 94);
             this.guna2Panel1.TabIndex = 5;
             // 
             // lblSaludo
@@ -258,12 +259,30 @@
             this.toolTipC.AllowLinksHandling = true;
             this.toolTipC.MaximumSize = new System.Drawing.Size(0, 0);
             // 
+            // btnBuscar
+            // 
+            this.btnBuscar.BorderRadius = 6;
+            this.btnBuscar.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnBuscar.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnBuscar.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnBuscar.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnBuscar.FillColor = System.Drawing.Color.DarkViolet;
+            this.btnBuscar.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnBuscar.ForeColor = System.Drawing.Color.White;
+            this.btnBuscar.Location = new System.Drawing.Point(770, 166);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(86, 30);
+            this.btnBuscar.TabIndex = 88;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            // 
             // frmAgenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(9)))), ((int)(((byte)(43)))));
-            this.ClientSize = new System.Drawing.Size(852, 508);
+            this.ClientSize = new System.Drawing.Size(880, 508);
+            this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.txtCorreo);
             this.Controls.Add(this.txtTelefono);
             this.Controls.Add(this.txtApellido);
@@ -276,6 +295,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.guna2Panel1);
             this.Name = "frmAgenda";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmAgenda";
             this.Load += new System.EventHandler(this.frmAgenda_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
@@ -301,5 +321,6 @@
         private System.Windows.Forms.TreeView treeViewContactos;
         private System.Windows.Forms.Label label4;
         private Guna.UI2.WinForms.Guna2HtmlToolTip toolTipC;
+        private Guna.UI2.WinForms.Guna2Button btnBuscar;
     }
 }

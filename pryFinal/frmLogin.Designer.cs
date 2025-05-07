@@ -210,6 +210,7 @@
             this.Controls.Add(this.principal);
             this.Controls.Add(this.panelPrinc);
             this.Name = "frmLogin";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.Load += new System.EventHandler(this.frmLogin_Load);
             this.panelPrinc.ResumeLayout(false);

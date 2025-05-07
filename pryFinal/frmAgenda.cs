@@ -32,7 +32,7 @@ namespace pryFinal
             CargarCategorias();
 
             txtNombre.Enabled = true;
-            txtApellido.Enabled = false;
+            txtApellido.Enabled = true;
             txtTelefono.Enabled = false;
             txtCorreo.Enabled = false;
             cmbCategoria.Enabled = false;
@@ -53,21 +53,29 @@ namespace pryFinal
         }
         private void CargarContactos()
         {
-
             treeViewContactos.Nodes.Clear();
+            try
+            {
+                string consulta = "SELECT * FROM Contactos";
+                DataTable tabla = conexion.EjecutarConsulta(consulta);
+                CargarContactosEnTreeView(tabla);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar contactos: " + ex.Message);
+            }
 
-            string consulta = "SELECT * FROM Contactos";
-            DataTable tabla = conexion.EjecutarConsulta(consulta);
 
-
+        }
+        private void CargarContactosEnTreeView(DataTable tabla)
+        {
             foreach (DataRow fila in tabla.Rows)
             {
                 string categoria = fila["Categoria"].ToString();
                 string nombreCompleto = $"{fila["Nombre"]} {fila["Apellido"]}";
                 string telefono = fila["Telefono"].ToString();
                 string correo = fila["Correo"].ToString();
-                string contactoCompleto = $"Nombre: {fila["Nombre"]} {fila["Apellido"]} | Tel: {telefono} | Correo: {correo} | Categoria: {categoria}";  // Línea nueva para mostrar todos los datos
-
+                string contactoCompleto = $"Nombre: {fila["Nombre"]} {fila["Apellido"]} | Tel: {telefono} | Correo: {correo} | Categoria: {categoria}";
 
                 TreeNode nodoCategoria = null;
                 foreach (TreeNode nodo in treeViewContactos.Nodes)
@@ -78,12 +86,12 @@ namespace pryFinal
                         break;
                     }
                 }
+
                 if (nodoCategoria == null)
                 {
                     nodoCategoria = new TreeNode(categoria);
                     treeViewContactos.Nodes.Add(nodoCategoria);
                 }
-
 
                 TreeNode nodoContacto = new TreeNode(contactoCompleto);
                 nodoContacto.Tag = fila;
@@ -92,15 +100,21 @@ namespace pryFinal
 
             treeViewContactos.ExpandAll();
         }
-
         private void LimpiarCampos()
         {
+           
             txtNombre.Clear();
             txtApellido.Clear();
             txtTelefono.Clear();
             txtCorreo.Clear();
             cmbCategoria.SelectedIndex = -1;
             contactoSeleccionadoId = -1;
+
+            
+            txtApellido.Enabled = true;
+            txtTelefono.Enabled = true;
+            txtCorreo.Enabled = true;
+            cmbCategoria.Enabled = true;
         }
 
         private void CargarCategorias()
@@ -109,20 +123,27 @@ namespace pryFinal
             string consulta = "SELECT DISTINCT Categoria FROM Contactos";
             DataTable tabla = conexion.EjecutarConsulta(consulta);
 
-            foreach (DataRow fila in tabla.Rows)
+            if (tabla != null && tabla.Rows.Count > 0)
             {
-                cmbCategoria.Items.Add(fila["Categoria"].ToString());
+                foreach (DataRow fila in tabla.Rows)
+                {
+                    cmbCategoria.Items.Add(fila["Categoria"].ToString());
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron categorías.");
             }
         }
 
         private void ValidarTodo()
         {
             bool todoCorrecto =
-                !string.IsNullOrWhiteSpace(txtNombre.Text) &&
-                !string.IsNullOrWhiteSpace(txtApellido.Text) &&
-                long.TryParse(txtTelefono.Text, out _) &&
-                txtCorreo.Text.Contains("@") && txtCorreo.Text.Contains(".") &&
-                cmbCategoria.SelectedIndex >= 0;
+        !string.IsNullOrWhiteSpace(txtNombre.Text) &&
+        !string.IsNullOrWhiteSpace(txtApellido.Text) &&
+        long.TryParse(txtTelefono.Text, out _) &&
+        txtCorreo.Text.Contains("@") && txtCorreo.Text.Contains(".") &&
+        cmbCategoria.SelectedIndex >= 0;
 
             btnAgregar.Enabled = todoCorrecto;
         }
@@ -165,21 +186,21 @@ namespace pryFinal
             string consulta = "UPDATE Contactos SET Nombre = @Nombre, Apellido = @Apellido, Telefono = @Telefono, Correo = @Correo, Categoria = @Categoria " + "WHERE Id = @Id";
 
             var parametros = new Dictionary<string, object>
-            {
-               { "@Nombre", txtNombre.Text },
-               { "@Apellido", txtApellido.Text },
-               { "@Telefono", txtTelefono.Text },
-               { "@Correo", txtCorreo.Text },
-               { "@Categoria", cmbCategoria.Text },
-               { "@Id", contactoSeleccionadoId }
-            };
+    {
+        { "@Nombre", txtNombre.Text },
+        { "@Apellido", txtApellido.Text },
+        { "@Telefono", txtTelefono.Text },
+        { "@Correo", txtCorreo.Text },
+        { "@Categoria", cmbCategoria.Text },
+        { "@Id", contactoSeleccionadoId }
+    };
 
             conexion.EjecutarComando(consulta, parametros);
             MessageBox.Show("Contacto modificado exitosamente.");
-            LimpiarCampos();
-            CargarContactos();
 
-            conexion.EjecutarComando(consulta, parametros);
+            LimpiarCampos(); 
+            CargarContactos(); 
+
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -190,51 +211,60 @@ namespace pryFinal
                 return;
             }
 
-            string consulta = "INSERT INTO Contactos (Nombre, Apellido, Telefono, Correo, Categoria) " + "VALUES (@Nombre, @Apellido, @Telefono, @Correo, @Categoria)";
-
-            var parametros = new Dictionary<string, object>
+            try
             {
-               { "@Nombre", txtNombre.Text },
-               { "@Apellido", txtApellido.Text },
-               { "@Telefono", txtTelefono.Text },
-               { "@Correo", txtCorreo.Text },
-               { "@Categoria", cmbCategoria.Text }
+                string consulta = "INSERT INTO Contactos (Nombre, Apellido, Telefono, Correo, Categoria) VALUES (@Nombre, @Apellido, @Telefono, @Correo, @Categoria)";
 
-            };
-            conexion.EjecutarComando(consulta, parametros);
-            MessageBox.Show("Contacto agregado exitosamente.");
-            LimpiarCampos();
-            CargarContactos();
+                var parametros = new Dictionary<string, object>
+        {
+            { "@Nombre", txtNombre.Text },
+            { "@Apellido", txtApellido.Text },
+            { "@Telefono", txtTelefono.Text },
+            { "@Correo", txtCorreo.Text },
+            { "@Categoria", cmbCategoria.Text }
+        };
 
-            conexion.EjecutarComando(consulta, parametros);
+                conexion.EjecutarComando(consulta, parametros);
+                MessageBox.Show("Contacto agregado exitosamente.");
+
+                LimpiarCampos(); 
+                CargarContactos();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al agregar contacto: " + ex.Message);
+            }
         }
+
+           
+        
 
         private void txtNombre_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(txtNombre.Text))
             {
                 txtNombre.BackColor = Color.LightGreen;
-                txtApellido.Enabled = true;
             }
             else
             {
                 txtNombre.BackColor = Color.LightCoral;
-                txtApellido.Enabled = false;
+                txtApellido.Enabled = false; 
             }
             ValidarTodo();
         }
 
         private void txtApellido_TextChanged(object sender, EventArgs e)
         {
+
             if (!string.IsNullOrWhiteSpace(txtApellido.Text))
             {
                 txtApellido.BackColor = Color.LightGreen;
-                txtTelefono.Enabled = true;
+                txtTelefono.Enabled = true; 
             }
             else
             {
                 txtApellido.BackColor = Color.LightCoral;
-                txtTelefono.Enabled = false;
+                txtTelefono.Enabled = false; 
             }
             ValidarTodo();
         }
@@ -244,12 +274,12 @@ namespace pryFinal
             if (long.TryParse(txtTelefono.Text, out _))
             {
                 txtTelefono.BackColor = Color.LightGreen;
-                txtCorreo.Enabled = true;
+                txtCorreo.Enabled = true; 
             }
             else
             {
                 txtTelefono.BackColor = Color.LightCoral;
-                txtCorreo.Enabled = false;
+                txtCorreo.Enabled = false; 
             }
             ValidarTodo();
         }
@@ -259,12 +289,12 @@ namespace pryFinal
             if (txtCorreo.Text.Contains("@") && txtCorreo.Text.Contains("."))
             {
                 txtCorreo.BackColor = Color.LightGreen;
-                cmbCategoria.Enabled = true;
+                cmbCategoria.Enabled = true; 
             }
             else
             {
                 txtCorreo.BackColor = Color.LightCoral;
-                cmbCategoria.Enabled = false;
+                cmbCategoria.Enabled = false; 
             }
             ValidarTodo();
         }
@@ -300,6 +330,66 @@ namespace pryFinal
                 LimpiarCampos();
 
             }
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string apellidoBuscado = txtApellido.Text.Trim();
+
+            if (string.IsNullOrEmpty(apellidoBuscado))
+            {
+                MessageBox.Show("Por favor, ingrese un apellido para buscar.");
+                return;
+            }
+
+            
+            treeViewContactos.Nodes.Clear();
+
+            
+            string consulta = "SELECT * FROM Contactos WHERE Apellido LIKE '%" + apellidoBuscado + "%'";
+
+     
+            DataTable tabla = conexion.EjecutarConsulta(consulta); 
+
+            if (tabla != null && tabla.Rows.Count > 0)
+            {
+                
+                foreach (DataRow fila in tabla.Rows)
+                {
+                    string categoria = fila["Categoria"].ToString();
+                    string nombreCompleto = $"{fila["Nombre"]} {fila["Apellido"]}";
+                    string telefono = fila["Telefono"].ToString();
+                    string correo = fila["Correo"].ToString();
+                    string contactoCompleto = $"Nombre: {fila["Nombre"]} {fila["Apellido"]} | Tel: {telefono} | Correo: {correo} | Categoria: {categoria}";
+
+                    TreeNode nodoCategoria = null;
+                    foreach (TreeNode nodo in treeViewContactos.Nodes)
+                    {
+                        if (nodo.Text == categoria)
+                        {
+                            nodoCategoria = nodo;
+                            break;
+                        }
+                    }
+                    if (nodoCategoria == null)
+                    {
+                        nodoCategoria = new TreeNode(categoria);
+                        treeViewContactos.Nodes.Add(nodoCategoria);
+                    }
+
+                    TreeNode nodoContacto = new TreeNode(contactoCompleto);
+                    nodoContacto.Tag = fila;
+                    nodoCategoria.Nodes.Add(nodoContacto);
+                }
+
+                treeViewContactos.ExpandAll();
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron contactos con ese apellido.");
+            }
+
+
         }
     }
 

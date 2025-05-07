@@ -201,6 +201,7 @@
             this.Controls.Add(this.principal);
             this.Controls.Add(this.guna2Panel1);
             this.Name = "frmAddUser";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmAddUser";
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();

@@ -44,15 +44,33 @@ namespace pryFinal
 
                 foreach (var line in lines)
                 {
-                    var values = line.Split(',');
+                    if (string.IsNullOrWhiteSpace(line))
+                        continue;
+
+                    var values = line.Split(';');
+
+                    if (values.Length != 6)
+                    {
+                       
+                        continue;
+                    }
+
+                    // para valirdar dts
+                    if (!int.TryParse(values[0], out int id) ||
+                        !decimal.TryParse(values[3], out decimal precio) ||
+                        !int.TryParse(values[4], out int stock))
+                    {
+                        
+                        continue;
+                    }
 
                     var producto = new clsProductos
                     {
-                        ID = int.Parse(values[0]),
+                        ID = id,
                         Nombre = values[1],
                         Categoria = values[2],
-                        Precio = decimal.Parse(values[3]),
-                        Stock = int.Parse(values[4]),
+                        Precio = precio,
+                        Stock = stock,
                         Descripcion = values[5]
                     };
 
@@ -60,6 +78,10 @@ namespace pryFinal
                 }
 
                 ActualizarGrilla();
+            }
+            else
+            {
+                MessageBox.Show("El archivo CSV no existe.", "Archivo no encontrado", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -357,6 +379,10 @@ namespace pryFinal
         private void frmProductos_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void dgvProductos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
         }
     }
 }

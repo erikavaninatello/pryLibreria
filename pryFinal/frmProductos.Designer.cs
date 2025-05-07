@@ -326,10 +326,10 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvProductos.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvProductos.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            this.dgvProductos.Location = new System.Drawing.Point(320, 119);
+            this.dgvProductos.Location = new System.Drawing.Point(244, 129);
             this.dgvProductos.Name = "dgvProductos";
             this.dgvProductos.RowHeadersVisible = false;
-            this.dgvProductos.Size = new System.Drawing.Size(542, 300);
+            this.dgvProductos.Size = new System.Drawing.Size(589, 308);
             this.dgvProductos.TabIndex = 81;
             this.dgvProductos.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dgvProductos.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -352,6 +352,7 @@
             this.dgvProductos.ThemeStyle.RowsStyle.Height = 22;
             this.dgvProductos.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvProductos.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            this.dgvProductos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProductos_CellContentClick);
             // 
             // toolTip
             // 
@@ -377,6 +378,7 @@
             this.Controls.Add(this.dgvProductos);
             this.Controls.Add(this.panelProductos);
             this.Name = "frmProductos";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "formProductos";
             this.Load += new System.EventHandler(this.frmProductos_Load);
             this.panelProductos.ResumeLayout(false);

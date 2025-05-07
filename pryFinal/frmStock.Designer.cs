@@ -153,6 +153,7 @@
             this.Controls.Add(this.Grilla);
             this.Controls.Add(this.panelStock);
             this.Name = "frmStock";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmStock";
             this.Load += new System.EventHandler(this.frmStock_Load);
             this.panelStock.ResumeLayout(false);

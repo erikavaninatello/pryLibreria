@@ -85,6 +85,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmBienvenida";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bienvenida";
             this.Load += new System.EventHandler(this.frmBienvenida_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmBienvenida_KeyDown);
